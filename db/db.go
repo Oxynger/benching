@@ -31,7 +31,7 @@ func NewDB(path string) (*DBMember, error) {
 		return nil, err
 	}
 
-	if runtime.GOOS == "ios" {
+	if runtime.GOOS == "darwin" {
 		fmt.Println(string(errorLog))
 	}
 	return &DBMember{

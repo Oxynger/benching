@@ -2,6 +2,8 @@ package main
 
 import (
 	"benching/db"
+	"benching/hasher"
+	"fmt"
 	"testing"
 )
 
@@ -81,4 +83,20 @@ func BenchmarkClear(b *testing.B) {
 		benchDB.Clear()
 	}
 
+}
+
+func BenchmarkHash(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		hasher.CreateHash(fmt.Sprint(i))
+	}
+}
+
+func BenchmarkHashParalel(b *testing.B) {
+	b.RunParallel(func(p *testing.PB) {
+		sid := 0
+		for p.Next() {
+			sid++
+			hasher.CreateHash(fmt.Sprint(sid))
+		}
+	})
 }
